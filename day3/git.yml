@@ -3,7 +3,7 @@
   gather_facts: yes
   become: true
   tasks:
-  - name: install redis on RHEL linux
+  - name: install redis on RHEL linux distros
     yum:
       name: git
       state: present
@@ -11,7 +11,7 @@
     become: true
     when: ansible_os_family == 'RedHat'
 
-  - name: install redis on Debian/Ubuntu
+  - name: install redis on Debian/Ubuntu distros
     apt:
       name: git
       state: present
