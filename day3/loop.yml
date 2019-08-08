@@ -1,5 +1,5 @@
 ---
-- name: nested loops with_nested example
+- name: nested loops using with_nested example
   hosts: localhost
   remote_user: root
   vars:
