@@ -11,8 +11,9 @@ Verify ansible version using below.
 ```
 ansible –version
 ```
-
 You should see output similar to below
+
+![alt text](https://github.com/mandar-dindorkar/ansible-training/blob/master/check_version.jpg)
 
 
 
