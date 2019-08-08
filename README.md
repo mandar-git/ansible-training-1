@@ -39,10 +39,7 @@ Install wget on local machine using yum module (as root user)
 ```
 ansible localhost -m yum -a "name=wget state=present" -b	
 ```
-Uninstall wget from local machine, using yum module and elevate privileges to root 
+Uninstall wget from local machine, using yum module and elevate privileges to root
+```
 ansible localhost -m yum -a "name=wget state=absent" -b	
 ```
-
-
-
-
