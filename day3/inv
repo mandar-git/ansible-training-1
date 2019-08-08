@@ -2,4 +2,4 @@
 localhost
 
 [remote]
-10.0.2.20 ansible_user=ubuntu
+10.0.1.20 ansible_user=ubuntu
