@@ -3,7 +3,45 @@ To demo the Ansible roles, clone the git repo into your local machine and run th
 ```
 ansible-playbook roledemo.yml -i inv
 ```
+Ansible Roles use the below directory structure for the playbook to work for tasks, varaibles and files defined as part of the role
 
+└── roles
+
+    └── mongo  (<role-name>)
+
+        ├── templates
+
+        │   ├── files
+        
+        │   │   └── mongod.repo
+
+        │   ├── tasks
+
+        │   │   └── main.yml
+
+        │   └── vars
+
+        │       ├── main.yml
+        
+   └── apache  (<role-name>)
+
+        ├── templates
+        
+        │   │   └── apache.conf
+
+        │   ├── files
+        
+        │   │   └── changed.conf
+
+        │   ├── tasks
+
+        │   │   └── main.yml
+
+        │   └── vars
+
+        │       ├── main.yml
+     
+           
 The playbook output should appear similar to below.  Here , we are using the inv file as inventory file, which specifies the IP address
 10.0.1.178 as private IP of the EC2 instance on which the play book will execute tasks and install mongodb and apache
 
