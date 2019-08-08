@@ -1,4 +1,4 @@
-To demo the Ansiblee roles, clone the git repo into your local machine and run the playbook from the roles-examples directory
+To demo the Ansible roles, clone the git repo into your local machine and run the playbook from the roles-examples directory
 
 ```
 ansible-playbook roledemo.yml -i inv
