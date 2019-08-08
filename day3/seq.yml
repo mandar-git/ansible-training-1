@@ -1,5 +1,6 @@
 ---
 - hosts: localhost
+  name: create a testgrp group and create multiple users (testuser01 to testuser09) using with_sequence
   tasks:
   - group:
       name: testgrp
