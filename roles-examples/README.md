@@ -23,7 +23,7 @@ Ansible Roles use the below directory structure for the playbook to work for tas
 
         │       ├── main.yml
         
-   └── apache  (<role-name>)
+   └── apache 
 
         ├── templates
         
