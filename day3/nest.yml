@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  become: true
+  tasks:
+  - name: nested loop example
+    shell: chmod -R "{{ item[0] }}" " {{ item[1] }}"
+    with_nested:
+      -[700]
+      -[/home/ec2-user]
+

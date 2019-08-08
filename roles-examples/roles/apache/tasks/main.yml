@@ -1,0 +1,24 @@
+
+  - name: Ensure httpd package is installed
+    yum:
+      name: httpd
+      state: present
+  - name: Ensure httpd service is enabled and running
+    service:
+      name: httpd
+      state: started
+      enabled: true
+
+  - name: Ensure configuration is updated
+#   The copy module expects the source file changed.conf to be present in files sub-directory of the role
+    copy:
+      src: changed.conf
+      dest: /etc/httpd/conf/httpd.conf
+
+  - name: Ensure configuration is updated
+#using template module, which expects the source file apache.conf to be present in templates sub-directory of the role
+    template:
+      src: apache.conf
+      dest: /etc/httpd/conf/httpd.conf
+
+

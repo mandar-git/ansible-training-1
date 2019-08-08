@@ -1,0 +1,22 @@
+---
+- hosts: localhost
+  force_handlers: True
+  tasks:
+  - name : I run first
+    debug:
+      msg: "I am a change"
+    changed_when: true
+    notify: critical_handler
+
+  - name: change a host
+    fail: 
+      msg: "I am last"
+
+  - name: should not run
+    debug:
+      msg: "I may never run"
+     
+  handlers:
+    - name: critical_handler
+      debug:
+        msg: "I really need to run"

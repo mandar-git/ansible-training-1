@@ -1,0 +1,19 @@
+---
+- hosts: localhost
+  become: true
+  vars:
+    packages:
+      - wget
+      - git
+      - httpd
+  tasks:
+  - name: remove packages
+    yum:
+      name: "{{item}}"
+      state: absent
+    with_items: "{{ packages }}"
+     
+  - name: add packages
+    yum: name="{{item}}" state=present
+    with_items: "{{ packages }}"
+     

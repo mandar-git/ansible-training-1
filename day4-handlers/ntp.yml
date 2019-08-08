@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  become: true
+  tasks:
+  - name: Ensure NTP is installed
+    yum: name=ntp state=installed 
+  - name: Ensure NTP is started
+    service: name=ntpd state=started enabled=yes
+
+     
+     
+      

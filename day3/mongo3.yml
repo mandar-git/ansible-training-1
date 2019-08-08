@@ -1,0 +1,44 @@
+---
+- hosts: remote
+  become: true
+  tasks:
+  - name: configure yum repo
+    copy: src=/home/ec2-user/plays/mongod.repo dest=/etc/yum.repos.d/mongodb-org-3.6.repo
+    
+  - name: install mongodb
+    yum: name=mongodb-org state=present
+
+  - template:
+        src: mongod.conf
+        dest: /etc/mongod.conf
+
+  - name: start mongod server
+    service: name=mongod state=started enabled=yes
+
+  - name: verify mongodb is running
+    shell: "service mongod status"
+    register: status
+
+  - name: display mongod status output
+    debug: msg="{{status.stdout_lines}}"
+
+  - name: verify mongod process is running
+    shell: "ps -ef | grep mongod"
+    register: output
+
+  - name: display mongo process output
+    debug: msg="{{output.stdout}}"
+
+  - name: initiate replicaset
+    shell: " mongo --eval 'rs.initiate()' "
+
+  - name: wait for 30 seconds
+    pause:
+      seconds: 10
+
+  - name: capture cluster status
+    shell: "mongo --eval 'rs.status()'"    
+    register: rsstatus
+
+  - name: display cluster status
+    debug: msg="{{rsstatus.stdout_lines}}"

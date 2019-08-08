@@ -1,0 +1,23 @@
+- hosts: remote
+  gather_facts: no
+  become: true
+  tasks:
+    - name: #Uninstall tools mongo package
+      yum:
+       name: mongodb-org-tools
+       state: absent
+    - name: Uninstall mongo shell package
+      yum:
+       name: mongodb-org-shell
+       state: absent
+    - name: Uninstall mongos package
+      yum:
+       name: mongodb-org-mongos
+       state: absent
+    - name: Uninstall mongo server
+      yum:
+       name: mongodb-org-server
+       state: absent
+
+    - name: cleanup data and log directories
+      shell: "rm -rf /var/lib/mongo && rm -rf /var/log/mongodb"

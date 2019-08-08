@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  tasks:
+    - command: service httpd restart
+      notify: restart service
+
+    - command: service ntpd restart
+      notify: restart service
+
+  handlers:
+    - name: restart service
+      debug:
+        msg: "Handler notified, verify service restarted"

@@ -1,0 +1,33 @@
+---
+- hosts: localhost
+  become: yes
+  remote_user: setup
+  gather_facts: false
+  tasks:
+#    - name: Flush the playbook handlers
+#      meta: flush_handlers
+
+    - name: Change ntp service config
+      lineinfile:
+       path: /etc/ntp.conf
+       line: "server 03.us.pool.ntp.org"
+      notify: restart ntp service
+
+    - name: Flush the playbook handlers
+      meta: flush_handlers
+
+    - name: Change ntp service config
+      lineinfile:
+       path: /etc/ntp.conf
+       line: "server 04.us.pool.ntp.org"
+      notify: restart ntp service
+
+    - name: task after notification
+      debug:
+        msg: "Called before handler invocation"
+
+  handlers:
+    - name: restart ntp service
+      service:
+       name: ntpd
+       state: restarted

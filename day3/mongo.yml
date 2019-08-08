@@ -1,0 +1,26 @@
+---
+- hosts: localhost
+  become: true
+  tasks:
+  - name: configure yum repo
+    copy: src=/home/ec2-user/plays/mongod.repo dest=/etc/yum.repos.d/mongodb-org-3.6.repo
+
+  - name: install mongodb 
+    yum: name=mongodb-org state=present
+
+  - name: start mongod server
+    service: name=mongod state=started enabled=yes
+
+  - name: verify mongodb is running
+    shell: "service mongod status"
+    register: status
+
+  - name: display mongod status output
+    debug: msg="{{status.stdout_lines}}"
+
+  - name: verify mongod process is running
+    shell: "ps -ef | grep mongod"
+    register: output
+
+  - name: display mongo process output
+    debug: msg="{{output.stdout}}"

@@ -1,0 +1,40 @@
+---
+- hosts: remote
+  become: true
+  tasks:
+  - name: configure yum repo 
+    copy: src=/home/ec2-user/plays/mongod.repo dest=/etc/yum.repos.d/mongodb-org-3.6.repo
+    when: ansible_os_family == 'RedHat'
+  
+  - name: download mongo for ubutnu
+    shell: "wget -qO - https://www.mongodb.org/static/pgp/server-3.6.asc | sudo apt-key add -"
+    when: ansible_os_family == 'Debian'
+    
+  - name: configure apt
+    copy: src=/home/ec2-user/plays/mongodb-org.list dest=/etc/apt/sources.list.d/mongodb-org-3.6.list
+    when: ansible_os_family == 'Debian'
+  
+  - name: install mongodb on rhel
+    yum: name=mongodb-org state=present
+    when: ansible_os_family == 'RedHat'
+
+  - name: install mongodb on ubuntu
+    shell: "apt-get install -y mongodb-org"
+    when: ansible_os_family == 'Debian'
+  
+  - name: start mongod server
+    service: name=mongod state=started enabled=yes
+
+  - name: verify mongodb is running
+    shell: "service mongod status"
+    register: status
+
+  - name: display mongod status output
+    debug: msg="{{status.stdout_lines}}"
+
+  - name: verify mongod process is running
+    shell: "ps -ef | grep mongod"
+    register: output
+
+  - name: display mongo process output
+    debug: msg="{{output.stdout}}"

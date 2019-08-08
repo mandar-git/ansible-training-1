@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  handlers:
+    - name: restart1
+      service: name=memcached state=restarted
+      listen: "restart service"
+     
+    - name: restart1
+      service: name=httpd state=restarted      
+      listen: "restart service"
+
+  tasks:
+    - name: restart everything
+      command: echo "this task will restart the web services"
+      notify: 
+        - "restart service"
+ 

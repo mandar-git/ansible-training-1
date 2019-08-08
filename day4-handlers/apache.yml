@@ -1,0 +1,29 @@
+---
+- hosts: localhost
+  become: true
+  tasks:
+  - name: Ensure httpd package is installed
+    yum:
+      name: httpd
+      state: present
+  - name: Ensure httpd service is enabled and running
+    service:
+      name: httpd
+      state: started
+      enabled: true
+   
+  - name: Ensure configuration is updated
+    template:
+      src: changed.conf
+      dest: /etc/httpd/conf/httpd.conf
+    notify: Restart HTTPd
+  
+  handlers:
+  - name: Restart HTTPd
+    service:
+      name:  httpd
+      state: restarted
+
+     
+     
+      

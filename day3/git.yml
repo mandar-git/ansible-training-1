@@ -1,0 +1,20 @@
+---
+- hosts: all
+  gather_facts: yes
+  become: true
+  tasks:
+  - name: install redis on RHEL linux
+    yum:
+      name: git
+      state: present
+      update_cache: true
+    become: true
+    when: ansible_os_family == 'RedHat'
+
+  - name: install redis on Debian/Ubuntu
+    apt:
+      name: git
+      state: present
+      update_cache: true
+    become: true
+    when: ansible_os_family == 'Debian'

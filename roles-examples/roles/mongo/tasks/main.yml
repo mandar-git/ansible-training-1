@@ -1,0 +1,22 @@
+  - name: Create mongo directory
+    file:
+      path: "/home/ec2-user/mongo"
+      state: directory
+      mode: 0755
+
+  - name: configure yum repo
+    copy: src="{{srcrepo}}" dest="{{destrepo}}"     
+  
+  - name: install mongodb
+    yum: name=mongodb-org state=present
+
+  - name: start mongod server
+    service: name=mongod state=started enabled=yes
+
+  - name: verify mongodb is running
+    shell: "service mongod status"
+    register: status
+
+  - name: display mongod status output
+    debug: msg="{{status.stdout_lines}}"
+
