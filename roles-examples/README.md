@@ -1,11 +1,13 @@
 To demo the Ansiblee roles, clone the git repo into your local machine and run the playbook from the roles-examples directory
 
-ansible-playbook roledemo.yml -i inv
-
 ```
+ansible-playbook roledemo.yml -i inv
+```
+
 The playbook output should appear similar to below.  Here , we are using the inv file as inventory file, which specifies the IP address
 10.0.1.178 as private IP of the EC2 instance on which the play book will execute tasks and install mongodb and apache
 
+```
 [root@ip-10-0-1-226 roles-examples]# ansible-playbook roledemo.yml -i inv
 
 PLAY [all] ***************************************************************************************************************
@@ -58,4 +60,4 @@ ok: [10.0.1.178]
 
 PLAY RECAP ***************************************************************************************************************
 10.0.1.178                 : ok=10   changed=2    unreachable=0    failed=0
-'''
+```
