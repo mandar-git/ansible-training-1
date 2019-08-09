@@ -50,7 +50,7 @@ ansible-vault --vault-id vault1@prompt encrypt file1.txt   // associates vault1 
 ansible-vault --vault-id vault2@prompt encrypt file2.txt   // associates vault2 (vault-id) with file2.txt   
 ```
 
- Multiple files can be encrypted with different vault-ids as seen above. All of these files can be used/referenced  in a single playbook (refer ![alt text](https://github.com/mandar-dindorkar/ansible-training/blob/master/day6-vault/multivault.yml) . You can executing such playbook using below command to specify the vault-id for each file, so that ansible prompts for password for decrypting each file at the time of execuing the playbook 
+ Multiple files can be encrypted with different vault-ids as seen above. All of these files can be used/referenced  in a single playbook (refer ![multivault.yml](https://github.com/mandar-dindorkar/ansible-training/blob/master/day6-vault/multivault.yml) . You can executing such playbook using below command to specify the vault-id for each file, so that ansible prompts for password for decrypting each file at the time of execuing the playbook 
  
  ```
  ansible-playbook –-vault-id vault1@prompt –-vault-id vault2@prompt playbook.yml
