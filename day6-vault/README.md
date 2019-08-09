@@ -1,6 +1,7 @@
 Examples in this directory demonstrate the use of Ansible Vault to encrypt sensitive data inside files/varaibles referenced in
-the Ansible playbooks. All the examples use localhost so there is no need to configure any remote hosts/additional instances to test these
-examples, other than the Ansible control machine (on which Ansible is already installed)
+the Ansible playbooks. All the examples use localhost so there is no need to configure any remote hosts/additional instances to test theseexamples, other than the Ansible control machine (on which Ansible is already installed)
+
+All the files used in the playbooks need to be present in the same directory as the playbook yml file
 
 You can encrypt a string varible defined in-memory using below command , and then use it inside a vars file reference by a playbook. (the --ask-vault-pass is optional in below command, if it is not mentioned, ansible will prompt for a password by default) 
 
