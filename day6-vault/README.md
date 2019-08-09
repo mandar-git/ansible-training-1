@@ -22,7 +22,7 @@ ansible-vault decrypt secret.yml
 ```
 
 
-All of the below commands prompts for a password, which is used to encrypt/decrypt the file contents
+All of the below commands prompt for a password, which is used to encrypt/decrypt the file contents
 
 ```
 ansible-vault create <file-name> :  Creates a new file , prompts for a paswword used to encrypt file contents and opens in edit mode , later saves the file as encrypted with the contents updated 
