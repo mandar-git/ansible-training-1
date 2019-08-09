@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  tasks:
+    - name: include secret_key
+      include_vars: secret.yml
+
+    - name: get value
+      debug:
+        msg: "The secret_key value is: {{ secret_key }}"

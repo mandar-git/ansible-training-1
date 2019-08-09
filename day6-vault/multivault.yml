@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  tasks:
+    - name: display multiple files
+      debug: msg="{{item}}"
+      with_file:
+        - "/home/ec2-user/vault/file1.txt"
+        - "/home/ec2-user/vault/file2.txt"
