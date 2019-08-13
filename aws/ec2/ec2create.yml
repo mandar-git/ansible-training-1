@@ -1,0 +1,23 @@
+---
+- hosts: localhost
+  vars_files:
+  - ec2vars.yml
+  tasks:
+  - name: Create an EC2 Instance
+    ec2:
+      key_name: "{{ key_pair }}"
+      instance_type: "{{ instance_type }}"
+      image: "{{ ami_id }}"
+      wait: yes
+      group_id: "{{ ansible_sg }}"
+      vpc_subnet_id: "{{ subnetId }}"
+      assign_public_ip: yes
+      region: "{{ aws_region }}"      
+      count: "{{ instance_count }}"
+      instance_tags:
+        Name: "{{ tag_name }}"
+    register: ec2pub
+
+  - name: 
+    debug:
+      msg: "{{ ec2pub.instances[0].private_ip }}" 

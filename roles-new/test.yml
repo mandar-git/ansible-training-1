@@ -1,0 +1,18 @@
+---
+- hosts: localhost
+  vars:
+    - grpname: mongodb
+  tasks: 
+    - name: 
+      copy:
+        dest : ./outfile
+        content: "{{[ grpname ]}}"
+
+    - template:
+        src: inv.j1
+        dest: ./outfile2
+       
+           
+    
+ 
+  

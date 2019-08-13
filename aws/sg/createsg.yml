@@ -1,0 +1,48 @@
+---
+- name: Create and then delete an  EC2 Security Group
+  hosts: localhost
+  vars_files:
+  - sgvars.yml
+  tasks:
+  - ec2_group:
+      name: my_web_sg
+      description: Sample Web Security Group
+      vpc_id: "{{ vpc_id }}"
+      region: "{{ aws_region }}"
+      rules:
+        - proto: tcp
+          from_port: 80
+          to_port: 80
+          cidr_ip: 0.0.0.0/0
+        - proto: tcp
+          from_port: 22
+          to_port: 22
+          group_id: "{{ bastion_sg }}"  
+        - proto: tcp
+          from_port: 443
+          to_port: 443
+          cidr_ip: 0.0.0.0/0 
+        - proto: icmp
+          from_port: 8
+          to_port: -1
+          cidr_ip: "{{ subnet_cidr }}"
+      rules_egress:
+        - proto: all
+          cidr_ip: 0.0.0.0/0
+    register: my_web_sg
+
+  - name: Display created Security Group
+    debug:
+      msg: "{{ my_web_sg.group_id }}"
+
+  - name: wait for 45 seconds
+    pause:
+      seconds: 45
+   
+  - name: Delete the created Security Group
+    ec2_group:
+      region: "{{ aws_region }}"
+      group_id: "{{ my_web_sg.group_id }}"
+      state: absent
+      
+   

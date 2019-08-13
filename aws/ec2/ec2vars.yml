@@ -1,0 +1,8 @@
+key_pair: bastion-key-pair
+instance_type: t2.micro
+ami_id: ami-0d2692b6acea72ee6
+ansible_sg: sg-01dd7193da226b65e
+subnetId: subnet-0fc52ab2b38c097dc
+aws_region: ap-south-1
+instance_count: 2
+tag_name: dbstack

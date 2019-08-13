@@ -1,0 +1,17 @@
+  - name: configure yum repo
+    copy: src="{{srcrepo}}" dest="{{destrepo}}"
+
+  - name: install grafana
+    yum: 
+      name: grafana 
+      state: present 
+      update_cache: true
+
+  - name: start grafana
+    service: name=grafana-server state=started
+
+  - name: configure grafana to start at boot-time upon restart
+    shell: "/sbin/chkconfig --add grafana-server"
+
+  - name: enable service to start at boot
+    shell: "systemctl enable grafana-server.service"

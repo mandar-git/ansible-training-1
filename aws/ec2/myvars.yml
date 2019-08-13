@@ -1,0 +1,13 @@
+key_pair: bastion-key-pair
+region: ap-south-1
+ansible_sg: sg-01dd7193da226b65e
+ami_id: ami-0d2692b6acea72ee6
+instance_type: t2.micro
+instance_name: webserver-stack
+subnet_id: subnet-0fc52ab2b38c097dc
+env: dev
+hostpath: "./inv"
+hoststring: "ansible_ssh_user=ec2-user ansible_ssh_private_key_file=bastion-key-pair.pem"
+instance_count: 3
+
+

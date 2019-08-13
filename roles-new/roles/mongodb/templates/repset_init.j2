@@ -1,0 +1,13 @@
+rs.initiate()
+sleep(13000)
+cfg=rs.config()
+{% for host in groups['mongod-servers'] %}
+cfg.members[0].host="{{host}}:{{ mongod_port }}"
+rs.reconfig(cfg,{force:true})
+sleep(12000)
+{% endfor %}
+{% for host in groups['mongod-servers'] %}
+rs.add("{{ host }}:{{ mongod_port }}")
+sleep(8000)
+{% endfor %}
+printjson(rs.status())

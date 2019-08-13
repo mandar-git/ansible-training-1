@@ -1,0 +1,5 @@
+srcrepo : mongod.repo
+destrepo : /etc/yum.repos.d/mongodb-org-3.6.repo
+mongod_port: 27017
+
+

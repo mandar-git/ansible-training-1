@@ -1,0 +1,50 @@
+  - name: Create mongo directory
+    file:
+      path: "/home/ec2-user/mongo"
+      state: directory
+      mode: 0755
+
+  - name: configure yum repo
+    copy: src="{{srcrepo}}" dest="{{destrepo}}"     
+
+  - name: get current ip address of host
+    uri:
+      url: http://169.254.169.254/latest/meta-data/local-ipv4
+      return_content: yes
+    register: ipv4
+
+  - name: add host to /etc/hosts
+    lineinfile:
+      path: /etc/hosts
+      line: 127.0.0.1 {{ ipv4.content }}
+
+  - name: verify
+    shell: "cat /etc/hosts"
+  
+  - name: install mongodb
+    yum: name=mongodb-org state=present
+  
+  - name: update configuration
+    template: 
+        src: mongod.conf.j2
+        dest: /etc/mongod.conf
+     
+  - name: start mongod server
+    service: name=mongod state=started enabled=yes
+
+  - name: verify mongodb is running
+    shell: "service mongod status"
+    register: status
+
+  - name: display mongod status output
+    debug: msg="{{status.stdout_lines}}"
+
+  - name: Create the file to initialize the mongod replica set 
+    template: src=repset_init.j2 dest=/tmp/repset_init.js
+
+  - name: Initialize mongo replica set
+    shell: /usr/bin/mongo --port "{{ mongod_port }}" /tmp/repset_init.js
+    run_once: true
+
+
+

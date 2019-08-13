@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  become: true
+  gather_facts: no
+  roles:
+     - ec2
+
+- hosts: mongod-servers
+  become: true
+  gather_facts: no
+  roles:
+     - mongodb

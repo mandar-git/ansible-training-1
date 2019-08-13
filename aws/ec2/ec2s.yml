@@ -1,0 +1,36 @@
+---
+- hosts: localhost
+  vars_files:
+  - ec2vars.yml
+  tasks:
+  - name: Create a group of EC2 Instances
+    ec2:
+      key_name: "{{ key_pair }}"
+      instance_type: "{{ instance_type }}"
+      image: "{{ ami_id }}"
+      wait: yes
+      group_id: "{{ ansible_sg }}"
+      vpc_subnet_id: "{{ subnetId }}"
+      assign_public_ip: yes
+      region: "{{ aws_region }}"
+      count_tag:
+        Name: "{{ tag_name }}"
+      exact_count: "{{ instance_count }}"
+      instance_tags:
+        Name: "{{ tag_name }}"
+    register: ec2s
+
+  - name: List instance_ids for newly created instances
+    debug:
+      msg: "{{ item }}"
+    with_items: "{{ ec2s.instance_ids }}"
+ 
+  - name: Add all instance private IPs to host group
+    add_host:
+      hostname: "{{ item.private_ip }}"
+      group: ansiblehosts
+    with_items: "{{ ec2s.instances }}"  
+
+  - name: Show group
+    debug:
+      var: groups.ansiblehosts

@@ -1,0 +1,2 @@
+srcrepo : grafana.repo
+destrepo: /etc/yum.repos.d/grafana.repo

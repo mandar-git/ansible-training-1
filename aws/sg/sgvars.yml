@@ -1,0 +1,4 @@
+aws_region: ap-south-1
+bastion_sg: "sg-0723dd50b712d1998"
+vpc_id: vpc-0037613859de46e6b        
+subnet_cidr: "10.0.1.0/24"
