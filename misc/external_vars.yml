@@ -1,0 +1,4 @@
+pkgs_to_install:
+  - ntp
+  - python-pip
+  - docker

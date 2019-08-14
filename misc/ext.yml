@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  tasks:
+  - name: pass value from external variable
+    debug:
+      msg: "{{ ext_var }}"
+ 

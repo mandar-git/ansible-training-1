@@ -1,0 +1,40 @@
+---
+
+- hosts: localhost
+  name: sample playbook with multiple tasks
+  vars:
+  -  mypkg: wget
+  -  state: absent
+  vars_files:
+  -  external_vars.yml
+  tasks:
+  - name: print contents of home dir
+    shell: "ls -ltr /home/ec2-user"
+ 
+  - name: install git
+    yum: name=git state=present
+
+  - name: Install my package
+    yum: 
+      name: "{{mypkg}}" 
+      state: present
+
+  - name: Display pkg names efrom vars file
+    debug:
+      msg: "{{ item }}"
+    with_items: "{{ pkgs_to_install}}"
+
+  - name: install packages from external file
+    yum: name="{{item}}" state={{state}}
+    with_items: "{{ pkgs_to_install }}"
+   
+  - name: install apache
+    yum: 
+      name: httpd
+      state: present
+   
+  - name: start apache  
+    service:
+      name: httpd
+      state: started
+      enabled: yes

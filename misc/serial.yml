@@ -1,0 +1,17 @@
+---
+- hosts: remote
+  name: demonstrate rolling upgrade
+  become: true
+  tasks:
+  - copy:
+      dest: /home/ec2-user/index.html      
+      content: "<html> welcome to apache </html>"
+
+  - yum:
+      name: httpd
+      state: present
+  - service:
+      name: httpd
+      state: started
+      enabled: yes
+   

@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  gather_facts: no
+  tasks:
+  - name: play1 tasks
+    debug:
+      msg: "message from play 1"
+
+- name: play from other file
+  include: play2.yml

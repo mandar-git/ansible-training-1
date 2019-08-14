@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  gather_facts: no
+  tasks:
+  - name: play1 tasks
+    debug:
+      msg: "message from play3"

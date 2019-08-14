@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars:
+  - message: "Always runs"
+  tasks:
+  - debug:
+      msg: "runs when tag1 is used"
+    tags:
+    - tag1
+
+  - debug:
+      msg: "runs when you use tag2"
+    tags:
+    - tag2
+
+  - debug:
+      msg: "{{message}}"
+    -tags:
+       always
+  

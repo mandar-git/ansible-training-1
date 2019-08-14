@@ -1,0 +1,4 @@
+---
+  - name: included tasks
+    debug:
+      msg: "message from task2.yml"

@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  gather_facts: no
+  tasks:
+  - name: play1 tasks
+    debug:
+      msg: "message from play"
+
+  - name: play from included task
+    include_tasks: task1.yml
+
+  - name: include task conditionally
+    include_tasks: "{{host_var}}.yml"
+    when: host_var is defined
