@@ -1,0 +1,8 @@
+---
+  - hosts: localhost
+
+  - include: ec2info.yml
+
+  - include: ec2_create.yml
+   
+  - include: ebsreplace.yml

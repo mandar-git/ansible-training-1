@@ -1,0 +1,127 @@
+ ansible-playbook main.yml 
+
+[WARNING]: provided hosts list is empty, only localhost is available. Note that the implicit localhost does not match 'all'
+[DEPRECATION WARNING]: 'include' for playbook includes. You should use 'import_playbook' instead. This feature will be removed in version 2.12. 
+Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+
+PLAY [localhost] ********************************************************************************************************************************
+
+TASK [Gathering Facts] **************************************************************************************************************************
+ok: [localhost]
+
+PLAY [localhost] ********************************************************************************************************************************
+
+TASK [Gathering Facts] **************************************************************************************************************************
+ok: [localhost]
+
+TASK [gather facts about existing stack ec2] ****************************************************************************************************
+ok: [localhost]
+
+TASK [debug] ************************************************************************************************************************************
+ok: [localhost] => {
+    "msg": "10.0.1.14"
+}
+
+TASK [debug] ************************************************************************************************************************************
+ok: [localhost] => {
+    "msg": "i-0e67b9988e0ab370e"
+}
+
+TASK [get sdf volume] ***************************************************************************************************************************
+ok: [localhost]
+
+TASK [get sdg volume] ***************************************************************************************************************************
+ok: [localhost]
+
+TASK [debug] ************************************************************************************************************************************
+ok: [localhost] => {
+    "msg": {
+        "ansible_facts": {
+            "ebs_volume": "vol-075b3c9a8f80e8a20"
+        }, 
+        "changed": false, 
+        "failed": false
+    }
+}
+
+TASK [debug] ************************************************************************************************************************************
+ok: [localhost] => {
+    "msg": {
+        "ansible_facts": {
+            "ebs_volume": "vol-002603164cefcb092"
+        }, 
+        "changed": false, 
+        "failed": false
+    }
+}
+
+PLAY [localhost] ********************************************************************************************************************************
+
+TASK [Gathering Facts] **************************************************************************************************************************
+ok: [localhost]
+
+TASK [Create an EC2 instance] *******************************************************************************************************************
+[WARNING]: Unable to modify public ip assignment to True for instance i-0e67b9988e0ab370e. Whether or not to assign a public IP is determined
+during instance creation.
+changed: [localhost]
+
+TASK [disp] *************************************************************************************************************************************
+ok: [localhost] => (item={u'ramdisk': None, u'kernel': None, u'root_device_type': u'ebs', u'private_dns_name': u'ip-10-0-1-6.ap-south-1.compute.internal', u'block_device_mapping': {u'/dev/sdf': {u'status': u'attached', u'delete_on_termination': True, u'volume_id': u'vol-060e4edccafe7c201'}, u'/dev/xvda': {u'status': u'attached', u'delete_on_termination': True, u'volume_id': u'vol-0e49d55a4829188d1'}, u'/dev/sdg': {u'status': u'attached', u'delete_on_termination': True, u'volume_id': u'vol-0b52f9998e2205372'}}, u'key_name': u'test-kp', u'public_ip': u'13.233.230.86', u'image_id': u'ami-03b5297d565ef30a6', u'tenancy': u'default', u'private_ip': u'10.0.1.6', u'groups': {u'sg-0419362ac8a0ff4e1': u'test-SG'}, u'public_dns_name': u'', u'state_code': 16, u'id': u'i-04484b689a4f4c591', u'tags': {u'Name': u'webserver-stack', u'env': u'dev'}, u'placement': u'ap-south-1a', u'ami_launch_index': u'0', u'dns_name': u'', u'region': u'ap-south-1', u'ebs_optimized': False, u'launch_time': u'2020-03-30T22:51:45.000Z', u'instance_type': u't3a.nano', u'state': u'running', u'architecture': u'x86_64', u'hypervisor': u'xen', u'virtualization_type': u'hvm', u'root_device_name': u'/dev/xvda'}) => {
+    "msg": " 13.233.230.86"
+}
+
+TASK [get new EC2 instance info] ****************************************************************************************************************
+ok: [localhost]
+
+TASK [get new SDF volume] ***********************************************************************************************************************
+ok: [localhost]
+
+TASK [get new SDG volume] ***********************************************************************************************************************
+ok: [localhost]
+
+TASK [Introduce delay] **************************************************************************************************************************
+Pausing for 180 seconds
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
+ok: [localhost]
+
+PLAY [localhost] ********************************************************************************************************************************
+
+TASK [Gathering Facts] **************************************************************************************************************************
+ok: [localhost]
+
+TASK [stop existing EC2] ************************************************************************************************************************
+changed: [localhost]
+
+TASK [stop new EC2] *****************************************************************************************************************************
+changed: [localhost]
+
+TASK [Detach new SDF vol] ***********************************************************************************************************************
+changed: [localhost]
+
+TASK [Detach new SDG vol] ***********************************************************************************************************************
+changed: [localhost]
+
+TASK [Detach old SDF vol] ***********************************************************************************************************************
+changed: [localhost]
+
+TASK [Detach old SDG vol] ***********************************************************************************************************************
+changed: [localhost]
+
+TASK [Attach old SDF vol] ***********************************************************************************************************************
+changed: [localhost]
+
+TASK [Attach old SDG vol] ***********************************************************************************************************************
+changed: [localhost]
+
+TASK [Add Delay of 2 minutes] *******************************************************************************************************************
+Pausing for 120 seconds
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
+ok: [localhost]
+
+TASK [start new EC2] ****************************************************************************************************************************
+changed: [localhost]
+
+PLAY RECAP **************************************************************************************************************************************
+localhost                  : ok=27   changed=10   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+

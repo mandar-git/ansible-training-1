@@ -1,0 +1,63 @@
+---
+- hosts: localhost
+  vars:
+  - ansible_python_interpreter: /usr/bin/python3
+  vars_files:
+  - myvars.yml
+  tasks:
+  - name: Create an EC2 instance
+    ec2:
+      key_name: "{{key_pair}}"
+      region: "{{ region }}"
+      group_id: "{{ ansible_sg }}"
+      instance_type: "{{ instance_type }}"
+      image: "{{ ami_id }}"
+      wait: yes
+      monitoring: no            
+      exact_count: "{{ instance_count }}"
+      vpc_subnet_id: "{{ subnet_id }}"
+      assign_public_ip: yes
+      volumes:
+        - device_name: /dev/sdf
+          volume_type: gp2
+          volume_size: 10
+          delete_on_termination: true
+        - device_name: /dev/sdg
+          volume_type: gp2
+          volume_size: 10
+          delete_on_termination: true    
+      instance_tags:
+        env: "{{ env }}"
+        Name: "{{ instance_name }}"
+      count_tag: env
+
+    register: new_ec2
+
+  - name: disp
+    debug:
+      msg: " {{ item.public_ip }}"
+    with_items: "{{ new_ec2.instances }}"
+
+  - name: get new EC2 instance info
+    ec2_instance_info:
+      region: "{{region}}"
+      filters:
+        instance-state-name: running
+        instance-id: "{{ new_ec2.instance_ids[0] }}"
+    register: new_ec2_facts
+
+
+  - name: get new SDF volume
+    set_fact:
+      ebs_volume: "{{new_ec2_facts.instances[0].block_device_mappings | selectattr('device_name', 'match', '/dev/sdf') | map(attribute='ebs') | map(attribute='volume_id') | list | first }}"
+    register: sdf_vol_new
+
+  - name: get new SDG volume
+    set_fact:
+      ebs_volume: "{{new_ec2_facts.instances[0].block_device_mappings | selectattr('device_name', 'match', '/dev/sdg') | map(attribute='ebs') | map(attribute='volume_id') | list | first }}"
+    register: sdg_vol_new
+
+  - name: Introduce delay
+    pause:
+      seconds: 180
+   

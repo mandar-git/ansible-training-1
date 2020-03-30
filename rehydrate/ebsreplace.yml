@@ -1,0 +1,76 @@
+---
+  - hosts: localhost
+    vars:
+    - ansible_python_interpreter: /usr/bin/python3
+    vars_files:
+      - ec2vars.yml   
+    tasks:
+    - name: stop existing EC2
+      ec2:
+        state: stopped
+        region: "{{region}}"
+        instance_ids:
+        - "{{ ec2.instances[0].instance_id }}"
+        wait: yes
+  
+    - name: stop new EC2
+      ec2:
+        state: stopped
+        region: "{{region}}"
+        instance_ids:
+        - "{{ new_ec2_facts.instances[0].instance_id }}"
+        wait: yes
+
+    - name: Detach new SDF vol
+      ec2_vol:
+        region: "{{region}}"
+        id: "{{ sdf_vol_new.ansible_facts.ebs_volume }}"
+        instance: None
+
+    - name: Detach new SDG vol
+      ec2_vol:
+        region: "{{region}}"
+        id: "{{ sdg_vol_new.ansible_facts.ebs_volume }}"
+        instance: None
+
+    - name: Detach old SDF vol
+      ec2_vol:
+        region: "{{region}}"
+        id: "{{ sdf_vol.ansible_facts.ebs_volume }}"
+        instance: None
+
+    - name: Detach old SDG vol
+      ec2_vol:
+        region: "{{region}}"
+        id: "{{ sdg_vol.ansible_facts.ebs_volume }}"
+        instance: None
+
+    - name: Attach old SDF vol
+      ec2_vol:
+        region: "{{region}}"
+        id: "{{ sdf_vol.ansible_facts.ebs_volume }}"
+        instance: "{{ new_ec2_facts.instances[0].instance_id }}"
+        device_name: /dev/sdf
+        delete_on_termination: no
+
+    - name: Attach old SDG vol
+      ec2_vol:
+        region: "{{region}}"
+        id: "{{ sdg_vol.ansible_facts.ebs_volume }}"
+        instance: "{{ new_ec2_facts.instances[0].instance_id }}"
+        device_name: /dev/sdg
+        delete_on_termination: no
+
+    - name: Add Delay of 2 minutes
+      pause:
+        seconds: 120
+
+    - name: start new EC2
+      ec2:
+        state: running
+        region: "{{region}}"
+        instance_ids:
+        - "{{ new_ec2_facts.instances[0].instance_id }}"
+        wait: yes
+ 
+        
