@@ -17,6 +17,7 @@ python3 -m pip install --upgrade --force pip
 python3 -m pip install boto3
 export PATH=/usr/local/bin:${PATH}
 
+pip install boto
 
 ## VERIFY PIP INSTALLATION
 
@@ -26,6 +27,7 @@ export PATH=/usr/local/bin:${PATH}
 [root@ip-10-0-1-13 ec2-user]# pip3 list
 Package         Version
 --------------- -------
+boto            2.49.0
 boto3           1.12.32
 botocore        1.15.32
 docutils        0.15.2
