@@ -1,0 +1,38 @@
+sudo yum install ansible -y
+sudo amazon-linux-extras install ansible2 -y
+
+sudo yum -y install python-pip
+pip install boto
+
+sudo amazon-linux-extras install python3
+
+
+#(installing boto3)
+sudo amazon-linux-extras install epel
+sudo yum -y install python34
+sudo yum -y install python34-pip
+
+sudo yum -y install python3
+python3 -m pip install --upgrade --force pip
+python3 -m pip install boto3
+export PATH=/usr/local/bin:${PATH}
+
+
+## VERIFY PIP INSTALLATION
+
+[root@ip-10-0-1-13 ec2-user]# which pip
+/usr/local/bin/pip
+[root@ip-10-0-1-13 ec2-user]#
+[root@ip-10-0-1-13 ec2-user]# pip3 list
+Package         Version
+--------------- -------
+boto3           1.12.32
+botocore        1.15.32
+docutils        0.15.2
+jmespath        0.9.5
+pip             20.0.2
+python-dateutil 2.8.1
+s3transfer      0.3.3
+setuptools      38.4.0
+six             1.14.0
+urllib3         1.25.8
