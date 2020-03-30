@@ -1,0 +1,10 @@
+key_pair: test-kp
+instance_type: t3a.nano
+ami_id: ami-03b5297d565ef30a6
+ansible_sg: sg-0419362ac8a0ff4e1
+subnet_id: subnet-081ea0dfbdeb3ffa1
+region: ap-south-1
+instance_name: webserver-stack
+env: dev
+hostpath: "./inv"
+instance_count: 1

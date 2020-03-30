@@ -1,0 +1,40 @@
+---
+  - hosts: localhost
+    vars:
+    - ansible_python_interpreter: /usr/bin/python3
+    vars_files:
+      - ec2vars.yml   
+    tasks:
+    - name: gather facts about existing stack ec2
+      ec2_instance_info:
+        region: "{{region}}"
+        filters:
+          instance-state-name: running
+          "tag:Name" : "{{ec2_name}}"
+      register: ec2
+
+    #- debug:
+    #    msg: "{{ec2}}"
+
+    - debug:
+        msg: "{{ec2.instances[0].private_ip_address}}"
+    - debug:
+        msg: "{{ec2.instances[0].instance_id}}"
+
+    - name: get sdf volume
+      set_fact:
+        ebs_volume: "{{ec2.instances[0].block_device_mappings | selectattr('device_name', 'match', '/dev/sdf') | map(attribute='ebs') | map(attribute='volume_id') | list | first }}"
+      register: sdf_vol
+
+    - name: get sdg volume
+      set_fact:
+        ebs_volume: "{{ec2.instances[0].block_device_mappings | selectattr('device_name', 'match', '/dev/sdg') | map(attribute='ebs') | map(attribute='volume_id') | list | first }}"
+      register: sdg_vol
+
+    - debug:
+        msg: "{{sdf_vol}}"
+
+    - debug:
+        msg: "{{sdg_vol}}"
+
+

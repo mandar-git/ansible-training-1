@@ -1,0 +1,5 @@
+---
+  - hosts: localhost
+  - include: ec2withvols.yml
+   
+  - include: ec2info.yml
